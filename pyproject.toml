@@ -42,4 +42,4 @@ examples = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "tatc.__version__"}
+version = {attr = "eose.__version__"}
