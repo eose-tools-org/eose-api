@@ -20,7 +20,10 @@ classifiers = [
     "Development Status :: 1 - Planning"
 ]
 dependencies = [
-    "pydantic >= 2.6"
+    "geojson-pydantic",
+    "geopandas >= 0.14",
+    "pydantic >= 2.6",
+    "shapely >= 2",
 ]
 dynamic = ["version"]
 
@@ -29,9 +32,13 @@ where = ["src"]
 
 [project.optional-dependencies]
 dev = [
+    "ipykernel",
     "black[jupyter] >= 24.2",
     "pylint",
-    "pylint-pydantic"
+    "pylint-pydantic",
+]
+examples = [
+    "matplotlib",
 ]
 
 [tool.setuptools.dynamic]
