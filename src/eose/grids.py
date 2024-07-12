@@ -12,7 +12,7 @@ from shapely.geometry import shape, Point as SPoint
 
 from .geometry import Altitude, FeatureCollection, MultiPolygon, Polygon
 from .targets import TargetPoint
-from .utils import CoordinateReferenceSystem
+from .utils import PlanetaryCoordinateReferenceSystem
 
 
 class UniformAngularGrid(BaseModel):
@@ -40,19 +40,19 @@ class UniformAngularGrid(BaseModel):
     region: Optional[Union[MultiPolygon, Polygon]] = Field(
         None, description="Spatial region in which to generate targets."
     )
-    crs: Optional[CoordinateReferenceSystem] = Field(
+    crs: Optional[PlanetaryCoordinateReferenceSystem] = Field(
         None, description="Coordinate reference system in which targets are defined."
     )
 
     def as_dataframe(self) -> GeoDataFrame:
         """
-        Transform this UniformAngularGrid into a GeoPandas GeoDataFrame.
+        Converts this uniform angular grid to a `geopandas.GeoDataFrame` object.
         """
         return GeoDataFrame.from_features(self.as_features())
 
     def as_features(self) -> FeatureCollection:
         """
-        Transform this UniformAngularGrid into a GeoJSON FeatureCollection.
+        Converts this uniform angular grid to a GeoJSON `FeatureCollection`.
         """
         return FeatureCollection(
             type="FeatureCollection",
@@ -61,7 +61,7 @@ class UniformAngularGrid(BaseModel):
 
     def as_targets(self) -> List[TargetPoint]:
         """
-        Transform this UniformAngularGrid into a list of TargetPoints.
+        Converts this uniform angular grid into a list of `TargetPoint` objects.
         """
         if self.region is None:
             min_i = 0
