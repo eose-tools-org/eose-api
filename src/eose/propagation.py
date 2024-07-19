@@ -19,7 +19,9 @@ class PropagationRequest(BaseModel):
     )
     start: AwareDatetime = Field(..., description="Propagation start time.")
     duration: timedelta = Field(..., ge=0, description="Propagation duration.")
-    time_step: timedelta = Field(..., gt=0, description="Propagation time step duration.")
+    time_step: timedelta = Field(
+        ..., gt=0, description="Propagation time step duration."
+    )
     frame: Union[CartesianReferenceFrame, str] = Field(
         CartesianReferenceFrame.ICRF,
         description="Reference frame in which propagation results defined.",
@@ -100,5 +102,5 @@ class PropagationResponse(BaseModel):
         Converts this propagation response to a `geopandas.GeoDataFrame`.
         """
         gdf = GeoDataFrame.from_features(self.as_features())
-        gdf["time"] = to_datetime(gdf["time"]) # helper for type coersion
+        gdf["time"] = to_datetime(gdf["time"])  # helper for type coersion
         return gdf
