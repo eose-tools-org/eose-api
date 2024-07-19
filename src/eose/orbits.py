@@ -13,7 +13,7 @@ class GeneralPerturbationsOrbitState(BaseModel):
         ..., description="Epoch (time of orbit element specification)."
     )
     mean_motion: float = Field(
-        ..., gt=0, description="Mean motion (revolutions per day)."
+        ..., gt=0, lt=100, description="Mean motion (revolutions per day)."
     )
     eccentricity: float = Field(..., ge=0, lt=1, description="Eccentricity.")
     inclination: float = Field(..., ge=0, le=180, description="Inclination (degrees).")
