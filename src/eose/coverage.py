@@ -18,8 +18,14 @@ class CoverageRequest(BaseModel):
     satellites: List[Satellite] = Field(..., description="Member satellites.")
 
 
+class CoverageSample(BaseModel):
+    start: AwareDatetime = Field(..., description="Coverage sample start time.")
+    duration: timedelta = Field(..., ge=0, description="Coverage sample duration.")
+
+
 class CoverageRecord(BaseModel):
     target: TargetPoint = Field(..., description="Target point.")
+    samples: List[CoverageSample] = Field([], description="List of coverage samples.")
     mean_revisit: Optional[timedelta] = Field(
         None,
         ge=0,
