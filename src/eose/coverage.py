@@ -7,7 +7,6 @@ from pydantic import AwareDatetime, BaseModel, Field
 
 from .geometry import Point, Feature, FeatureCollection
 from .targets import TargetPoint
-from .grids import UniformAngularGrid
 from .satellites import Satellite
 
 

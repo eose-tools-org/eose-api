@@ -21,9 +21,11 @@ classifiers = [
 ]
 dependencies = [
     "geojson-pydantic",
-    "geopandas >= 0.14",
+    "geopandas >= 0.13.2",
     "pydantic >= 2.6",
     "shapely >= 2",
+    "skyfield",
+    "sgp4"
 ]
 dynamic = ["version"]
 
@@ -32,13 +34,16 @@ where = ["src"]
 
 [project.optional-dependencies]
 dev = [
-    "ipykernel",
     "black[jupyter] >= 24.2",
     "pylint",
     "pylint-pydantic",
 ]
 examples = [
+    "ipykernel",
+    "joblib",
     "matplotlib",
+    "pandas",
+    "scipy",
 ]
 
 [tool.setuptools.dynamic]

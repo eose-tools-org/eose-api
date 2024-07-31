@@ -3,7 +3,8 @@ Utility data types.
 """
 
 from enum import Enum
-from typing import Annotated, List, Union
+from typing import List, Union
+from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
 

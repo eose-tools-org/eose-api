@@ -6,7 +6,6 @@ import itertools
 import math
 from typing import List, Optional, Union
 
-from geopandas import GeoDataFrame
 from pydantic import BaseModel, Field
 from shapely.geometry import shape, Point as SPoint
 
@@ -43,12 +42,6 @@ class UniformAngularGrid(BaseModel):
     crs: Optional[PlanetaryCoordinateReferenceSystem] = Field(
         None, description="Coordinate reference system in which targets are defined."
     )
-
-    def as_dataframe(self) -> GeoDataFrame:
-        """
-        Converts this uniform angular grid to a `geopandas.GeoDataFrame` object.
-        """
-        return GeoDataFrame.from_features(self.as_features())
 
     def as_features(self) -> FeatureCollection:
         """

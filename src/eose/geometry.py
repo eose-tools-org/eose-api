@@ -6,7 +6,8 @@ Redefines GeoJSON objects from `geojson_pydantic` to add constraints on:
  * latitude (-90 to 90, inclusive)
 """
 
-from typing import Annotated, ForwardRef, List, Literal, Optional, Tuple, Union
+from typing import ForwardRef, List, Literal, Optional, Tuple, Union
+from typing_extensions import Annotated
 
 from pydantic import Field
 from geojson_pydantic import (
