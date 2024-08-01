@@ -25,7 +25,8 @@ dependencies = [
     "pydantic >= 2.6",
     "shapely >= 2",
     "skyfield",
-    "sgp4"
+    "sgp4",
+    "tatc"
 ]
 dynamic = ["version"]
 
