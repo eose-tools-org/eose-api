@@ -26,7 +26,6 @@ dependencies = [
     "shapely >= 2",
     "skyfield",
     "sgp4",
-    "tatc"
 ]
 dynamic = ["version"]
 
@@ -45,6 +44,7 @@ examples = [
     "matplotlib",
     "pandas",
     "scipy",
+    "tatc",
 ]
 
 [tool.setuptools.dynamic]
