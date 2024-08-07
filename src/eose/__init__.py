@@ -31,6 +31,8 @@ from .orbits import GeneralPerturbationsOrbitState
 
 from .satellites import Satellite
 
+from .instruments import BasicSensor
+
 from .targets import TargetPoint
 
 from .propagation import PropagationRequest, PropagationRecord, PropagationResponse

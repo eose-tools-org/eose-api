@@ -1,6 +1,8 @@
-from typing import Optional, List
+from typing import Optional
 from pydantic import BaseModel, Field, model_validator
 from enum import Enum
+
+from eose.utils import Quaternion
 
 class Shape(str, Enum):
     CIRCULAR = "CIRCULAR"
@@ -39,32 +41,20 @@ class SphericalGeometry(BaseModel):
 
         return values
 
-# Example usage
-spherical_geom = SphericalGeometry(shape=Shape.CIRCULAR, diameter=90.0)
-print(spherical_geom)
-
-spherical_geom = SphericalGeometry(shape=Shape.RECTANGULAR, angle_height= 90.0, angle_width= 45)
-print(spherical_geom)
-
 class BasicSensor(BaseModel):
     name: Optional[str] = Field(None, description="Sensor name.")
     id: Optional[str] = Field(None, description="Sensor identifier.")
     mass: Optional[float] = Field(None, gt=0, description="Mass of the sensor in kilograms.")
     volume: Optional[float] = Field(None, gt=0, description="Volume of the sensor in cubic meters.")
     power: Optional[float] = Field(None, gt=0, description="(Average) Power consumption of the sensor in watts.")
-    orientation: str = Field(..., description="Orientation of the sensor.")
+    orientation: Optional[Quaternion] = Field(
+        [0, 0, 0, 1],
+        description="Orientation of the instrument view, relative to the body-fixed frame.",
+    )
     field_of_view: SphericalGeometry = Field(SphericalGeometry(diameter=30), description="Field of view of the sensor.")
     data_rate: Optional[float] = Field(None, gt=0, description="Data rate of the sensor in megabits per second.")
     bits_per_pixel: Optional[int] = Field(None, gt=1, description="Bits per pixel for the sensor's data output.")
 
-# Example usage:
-sensor = BasicSensor(   mass= 100.5,
-                        volume= 0.75,
-                        power= 150.0,
-                        orientation= "Nadir",
-                        field_of_view = SphericalGeometry(shape="CIRCULAR", diameter=30.0),
-                        data_rate= 10.5,
-                        bits_per_pixel= 16
-                    )
 
-print(sensor)
+
+
