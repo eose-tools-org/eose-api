@@ -21,6 +21,7 @@ class RectangularGeometry(BaseModel):
     angle_width: Optional[float] = Field(None, gt=0, lt=180, description="Angular width (about the sensor Y-axis) of the rectangular geometry in degrees.")
 
 class BasicSensor(BaseModel):
+    type: Literal["BasicSensor"] = Field("BasicSensor")
     name: Optional[str] = Field(None, description="Sensor name.")
     id: Optional[str] = Field(None, description="Sensor identifier.")
     mass: Optional[float] = Field(None, gt=0, description="Mass of the sensor in kilograms.")
@@ -37,6 +38,9 @@ class BasicSensor(BaseModel):
     data_rate: Optional[float] = Field(None, gt=0, description="Data rate of the sensor in megabits per second.")
     bits_per_pixel: Optional[int] = Field(None, gt=1, description="Bits per pixel for the sensor's data output.")
 
+class PassiveOpticalScanner(BaseModel):
+    type: Literal["PassiveOpticalScanner"] = Field("PassiveOpticalScanner")
 
-
+class SyntheticApertureRadar(BaseModel):
+    type: Literal["SyntheticApertureRadar"] = Field("SyntheticApertureRadar")
 
