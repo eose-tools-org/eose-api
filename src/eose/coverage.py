@@ -20,9 +20,7 @@ class CoverageSample(ObservationSample):
 
 
 class CoverageRecord(ObservationRecord):
-    samples: List[ObservationSample] = Field(
-        [], description="List of observation samples."
-    )
+    samples: List[CoverageSample] = Field([], description="List of coverage samples.")
     mean_revisit: Optional[timedelta] = Field(
         None,
         ge=0,
