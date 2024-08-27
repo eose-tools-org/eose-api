@@ -40,7 +40,14 @@ from .satellites import Satellite
 
 from .targets import TargetPoint
 
-from .propagation import PropagationRequest, PropagationRecord, PropagationResponse
+from .pointing import PointingSample, PointingRequest, PointingRecord, PointingResponse
+
+from .propagation import (
+    PropagationSample,
+    PropagationRequest,
+    PropagationRecord,
+    PropagationResponse,
+)
 
 from .utils import (
     Identifier,

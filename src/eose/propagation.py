@@ -9,16 +9,14 @@ from skyfield.framelib import itrs
 from skyfield.positionlib import ICRF
 
 from .geometry import Point, Feature, FeatureCollection
-from .orbits import GeneralPerturbationsOrbitState
-from .utils import Vector, CartesianReferenceFrame
+from .satellites import Satellite
+from .utils import Vector, CartesianReferenceFrame, Identifier
 
 
 class PropagationRequest(BaseModel):
-    orbit: GeneralPerturbationsOrbitState = Field(
-        ..., description="Orbit to be propagated."
-    )
     start: AwareDatetime = Field(..., description="Propagation start time.")
     duration: timedelta = Field(..., ge=0, description="Propagation duration.")
+    satellites: List[Satellite] = Field(..., description="Member satellites.")
     time_step: timedelta = Field(
         ..., gt=0, description="Propagation time step duration."
     )
@@ -28,11 +26,7 @@ class PropagationRequest(BaseModel):
     )
 
 
-class PropagationRecord(BaseModel):
-    frame: Union[CartesianReferenceFrame, str] = Field(
-        ...,
-        description="Reference frame in which position/velocity are defined.",
-    )
+class PropagationSample(BaseModel):
     time: AwareDatetime = Field(..., description="Time")
     position: Vector = Field(
         ...,
@@ -43,29 +37,31 @@ class PropagationRecord(BaseModel):
         description="Velocity (m/s)",
     )
 
-    def as_feature(self) -> Feature:
+    def as_feature(
+        self, satellite_id: Identifier, frame: CartesianReferenceFrame
+    ) -> Feature:
         """
         Convert this propagation record to a GeoJSON `Feature`.
         """
         return Feature(
             type="Feature",
-            geometry=self.as_geometry(),
-            properties=self.model_dump(),
+            geometry=self.as_geometry(frame),
+            properties=dict({"satellite_id": satellite_id}, **self.model_dump()),
         )
 
-    def as_geometry(self) -> Point:
+    def as_geometry(self, frame: CartesianReferenceFrame) -> Point:
         """
         Convert this propagation record to a GeoJSON `Point` geometry.
         """
         ts = load.timescale()
-        if self.frame == CartesianReferenceFrame.ICRF:
+        if frame == CartesianReferenceFrame.ICRF:
             icrf_position = ICRF(
                 Distance(m=self.position).au,
                 Velocity(km_per_s=[i / 1000 for i in self.velocity]).au_per_d,
                 ts.from_datetime(self.time),
                 399,
             )
-        elif self.frame == CartesianReferenceFrame.ITRS:
+        elif frame == CartesianReferenceFrame.ITRS:
             icrf_position = ICRF.from_time_and_frame_vectors(
                 ts.from_datetime(self.time),
                 itrs,
@@ -77,8 +73,17 @@ class PropagationRecord(BaseModel):
         return Point.from_skyfield(wgs84.geographic_position_of(icrf_position))
 
 
+class PropagationRecord(BaseModel):
+    satellite_id: Identifier = Field(..., description="Satellite identifier.")
+    samples: List[PropagationSample] = Field(
+        [], description="List of propagation samples."
+    )
+
+
 class PropagationResponse(PropagationRequest):
-    time_series: List[PropagationRecord] = Field([], description="Propagation results")
+    satellite_records: List[PropagationRecord] = Field(
+        [], description="Propagation results"
+    )
 
     def as_features(self) -> FeatureCollection:
         """
@@ -86,7 +91,11 @@ class PropagationResponse(PropagationRequest):
         """
         return FeatureCollection(
             type="FeatureCollection",
-            features=[record.as_feature() for record in self.time_series],
+            features=[
+                sample.as_feature(record.satellite_id, self.frame)
+                for record in self.satellite_records
+                for sample in record.samples
+            ],
         )
 
     def as_dataframe(self) -> GeoDataFrame:

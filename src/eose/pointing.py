@@ -3,7 +3,7 @@ from typing import List, Optional, Union
 from pydantic import Field
 
 from .utils import Quaternion, FixedOrientation
-from .propagation import PropagationRecord, PropagationResponse
+from .propagation import PropagationSample, PropagationRecord, PropagationResponse
 
 
 class PointingRequest(PropagationResponse):
@@ -12,7 +12,7 @@ class PointingRequest(PropagationResponse):
     )
 
 
-class PointingRecord(PropagationRecord):
+class PointingSample(PropagationSample):
     body_orientation: Optional[Union[FixedOrientation, Quaternion]] = Field(
         None,
         description="Orientation of the spacecraft body-fixed frame, relative to requested frame.",
@@ -23,5 +23,9 @@ class PointingRecord(PropagationRecord):
     )
 
 
+class PointingRecord(PropagationRecord):
+    samples: List[PointingSample] = Field([], description="List of pointing samples.")
+
+
 class PointingResponse(PointingRequest):
-    time_series: List[PointingRecord] = Field([], description="Pointing results")
+    satellite_records: List[PointingRecord] = Field([], description="Pointing results")
