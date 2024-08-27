@@ -12,10 +12,12 @@ from .propagation import PropagationRecord, PropagationResponse
 from .coverage import CoverageSample, CoverageRecord, CoverageResponse
 
 class DataMetricRequest(BaseModel):
+    """ The data-metrics are calculated for all the target points within the coverage response.
+    """
     sensor: Union[BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar] = Field(..., description="Specifications of the sensor.")
     start: AwareDatetime = Field(..., description="Data metrics analysis start time.")
     duration: timedelta = Field(..., ge=0, description="Data metrics analysis duration.")
-    targets: List[TargetPoint] = Field(..., description="Target points.")
+    #targets: List[TargetPoint] = Field(..., description="Target points.")
     propagation_response: List[PropagationResponse] = Field(..., description="Satellite states during the requested analysis period.")
     coverage_response: List[CoverageResponse] = Field(..., description="Coverage during the requested analysis period.")
 
@@ -31,10 +33,10 @@ class BasicSensorDataMetricInstantaneous(BaseModel):
 class BasicSensorDataMetricSample(BaseModel):
     """ Aggregation of data metrics per overpass (for a target). """
     type: Literal["BasicSensor"] = Field("BasicSensor")
-    instantaneous_metrics: List[BasicSensorDataMetricInstantaneous] = Field([], description="List of instantaneous data metrics.")
+    instantaneous_metrics: List[BasicSensorDataMetricInstantaneous] = Field([], description="List of instantaneous data metrics calculated during a single overpass.")
     
 class BasicSensorDataMetricRecord(BaseModel):
-    """ Aggregation of data metrics per target (across possibly multiple overpasses). """
+    """ Aggregation of data metrics per target (across possibly *multiple* overpasses). """
     type: Literal["BasicSensor"] = Field("BasicSensor")
     target: TargetPoint = Field(..., description="Target point.")
     samples: List[BasicSensorDataMetricSample] = Field([], description="List of data metric samples.")
