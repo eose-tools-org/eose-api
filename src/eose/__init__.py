@@ -27,7 +27,12 @@ from .geometry import (
 
 from .grids import UniformAngularGrid
 
-from .observation import ObservationSample, ObservationRequest, ObservationRecord, ObservationResponse
+from .observation import (
+    ObservationSample,
+    ObservationRequest,
+    ObservationRecord,
+    ObservationResponse,
+)
 
 from .orbits import GeneralPerturbationsOrbitState
 

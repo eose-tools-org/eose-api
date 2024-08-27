@@ -7,16 +7,21 @@ from pydantic import Field
 
 from .observation import ObservationSample, ObservationRecord, ObservationResponse
 
+
 class CoverageRequest(ObservationResponse):
     pass
 
 
 class CoverageSample(ObservationSample):
-    revisit: Optional[timedelta] = Field(None, ge=0, description="Elapsed time since prior observation.")
+    revisit: Optional[timedelta] = Field(
+        None, ge=0, description="Elapsed time since prior observation."
+    )
 
 
 class CoverageRecord(ObservationRecord):
-    samples: List[ObservationSample] = Field([], description="List of observation samples.")
+    samples: List[ObservationSample] = Field(
+        [], description="List of observation samples."
+    )
     mean_revisit: Optional[timedelta] = Field(
         None,
         ge=0,
@@ -33,7 +38,7 @@ class CoverageResponse(CoverageRequest):
     coverage_fraction: float = Field(
         0, ge=0, le=1, description="Fraction of targets observed at least once."
     )
-    
+
     def as_dataframe(self) -> GeoDataFrame:
         """
         Converts this coverage response to a `geopandas.GeoDataFrame`.

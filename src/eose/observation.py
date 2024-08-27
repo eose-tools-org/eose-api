@@ -24,7 +24,9 @@ class ObservationSample(BaseModel):
 
 class ObservationRecord(BaseModel):
     target: TargetPoint = Field(..., description="Target point.")
-    samples: List[ObservationSample] = Field([], description="List of observation samples.")
+    samples: List[ObservationSample] = Field(
+        [], description="List of observation samples."
+    )
 
     def as_feature(self) -> Feature:
         """
