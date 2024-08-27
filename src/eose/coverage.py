@@ -3,70 +3,37 @@ from datetime import timedelta
 
 from geopandas import GeoDataFrame
 from pandas import to_timedelta
-from pydantic import AwareDatetime, BaseModel, Field
+from pydantic import Field
 
-from .geometry import Point, Feature, FeatureCollection
-from .targets import TargetPoint
-from .satellites import Satellite
+from .observation import ObservationSample, ObservationRecord, ObservationResponse
 
-
-class CoverageRequest(BaseModel):
-    start: AwareDatetime = Field(..., description="Coverage analysis start time.")
-    duration: timedelta = Field(..., ge=0, description="Coverage analysis duration.")
-    targets: List[TargetPoint] = Field(..., description="Target points.")
-    satellites: List[Satellite] = Field(..., description="Member satellites.")
+class CoverageRequest(ObservationResponse):
+    pass
 
 
-class CoverageSample(BaseModel):
-    start: AwareDatetime = Field(..., description="Coverage sample start time.")
-    duration: timedelta = Field(..., ge=0, description="Coverage sample duration.")
+class CoverageSample(ObservationSample):
+    revisit: Optional[timedelta] = Field(None, ge=0, description="Elapsed time since prior observation.")
 
 
-class CoverageRecord(BaseModel):
-    target: TargetPoint = Field(..., description="Target point.")
-    samples: List[CoverageSample] = Field([], description="List of coverage samples.")
+class CoverageRecord(ObservationRecord):
+    samples: List[ObservationSample] = Field([], description="List of observation samples.")
     mean_revisit: Optional[timedelta] = Field(
         None,
         ge=0,
-        description="Mean revisit time computed as the mean time between observations.",
+        description="Mean elapsed time between observations.",
     )
     number_samples: int = Field(0, ge=0, description="Number of observation samples.")
 
-    def as_feature(self) -> Feature:
-        """
-        Convert this coverage record to a GeoJSON `Feature`.
-        """
-        return Feature(
-            type="Feature",
-            geometry=self.as_geometry(),
-            properties=self.model_dump(),
-        )
 
-    def as_geometry(self) -> Point:
-        """
-        Convert this coverage record to a GeoJSON `Point` geometry.
-        """
-        return self.target.as_geometry()
-
-
-class CoverageResponse(BaseModel):
-    records: List[CoverageRecord] = Field([], description="Coverage results")
+class CoverageResponse(CoverageRequest):
+    observations: List[CoverageRecord] = Field([], description="Coverage results.")
     harmonic_mean_revisit: Optional[timedelta] = Field(
-        None, ge=0, description="Harmonic mean revisit time over all samples."
+        None, ge=0, description="Harmonic mean revisit time over all targets."
     )
     coverage_fraction: float = Field(
-        0, ge=0, le=1, description="Fraction of samples that observed as least once."
+        0, ge=0, le=1, description="Fraction of targets observed at least once."
     )
-
-    def as_features(self) -> FeatureCollection:
-        """
-        Converts this coverage response to a GeoJSON `FeatureCollection`.
-        """
-        return FeatureCollection(
-            type="FeatureCollection",
-            features=[record.as_feature() for record in self.records],
-        )
-
+    
     def as_dataframe(self) -> GeoDataFrame:
         """
         Converts this coverage response to a `geopandas.GeoDataFrame`.

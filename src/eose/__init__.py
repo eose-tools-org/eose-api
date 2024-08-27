@@ -1,6 +1,6 @@
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
-from .coverage import CoverageRequest, CoverageSample, CoverageRecord, CoverageResponse
+from .coverage import CoverageSample, CoverageRequest, CoverageRecord, CoverageResponse
 
 from .geometry import (
     Longitude,
@@ -26,6 +26,8 @@ from .geometry import (
 )
 
 from .grids import UniformAngularGrid
+
+from .observation import ObservationSample, ObservationRequest, ObservationRecord, ObservationResponse
 
 from .orbits import GeneralPerturbationsOrbitState
 

@@ -1,5 +1,5 @@
 from datetime import timedelta
-from typing import List, Optional, Union
+from typing import List, Union
 
 from pandas import to_datetime
 from pydantic import AwareDatetime, BaseModel, Field
@@ -10,7 +10,7 @@ from skyfield.positionlib import ICRF
 
 from .geometry import Point, Feature, FeatureCollection
 from .orbits import GeneralPerturbationsOrbitState
-from .utils import Vector, Quaternion, CartesianReferenceFrame, FixedOrientation
+from .utils import Vector, CartesianReferenceFrame
 
 
 class PropagationRequest(BaseModel):
@@ -41,14 +41,6 @@ class PropagationRecord(BaseModel):
     velocity: Vector = Field(
         ...,
         description="Velocity (m/s)",
-    )
-    body_orientation: Optional[Union[FixedOrientation, Quaternion]] = Field(
-        None,
-        description="Orientation of the spacecraft body-fixed frame, relative to requested frame.",
-    )
-    view_orientation: Optional[Quaternion] = Field(
-        [0, 0, 0, 1],
-        description="Orientation of the instrument view, relative to the body-fixed frame.",
     )
 
     def as_feature(self) -> Feature:
@@ -85,8 +77,8 @@ class PropagationRecord(BaseModel):
         return Point.from_skyfield(wgs84.geographic_position_of(icrf_position))
 
 
-class PropagationResponse(BaseModel):
-    records: List[PropagationRecord] = Field([], description="Propagation results")
+class PropagationResponse(PropagationRequest):
+    time_series: List[PropagationRecord] = Field([], description="Propagation results")
 
     def as_features(self) -> FeatureCollection:
         """
@@ -94,7 +86,7 @@ class PropagationResponse(BaseModel):
         """
         return FeatureCollection(
             type="FeatureCollection",
-            features=[record.as_feature() for record in self.records],
+            features=[record.as_feature() for record in self.time_series],
         )
 
     def as_dataframe(self) -> GeoDataFrame:
