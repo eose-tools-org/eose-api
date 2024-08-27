@@ -1,8 +1,9 @@
 from typing import List, Literal, Union
 from datetime import timedelta
-
+from geopandas import GeoDataFrame
 from pydantic import AwareDatetime, BaseModel, Field
 
+from .geometry import Point, Feature, FeatureCollection
 from .targets import TargetPoint
 from .instruments import BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar
 from .propagation import PropagationResponse
@@ -41,4 +42,3 @@ class BasicSensorDataMetricResponse(BaseModel):
     """ Aggregation of data metrics over all targets (and all overpasses). """
     type: Literal["BasicSensor"] = Field("BasicSensor")
     records: List[BasicSensorDataMetricRecord] = Field([], description="List of data metrics records.")
-
