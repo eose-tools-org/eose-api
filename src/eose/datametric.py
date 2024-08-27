@@ -1,15 +1,12 @@
-from typing import List, Optional, Literal, Union
+from typing import List, Literal, Union
 from datetime import timedelta
 
-from geopandas import GeoDataFrame
-from pandas import to_timedelta
 from pydantic import AwareDatetime, BaseModel, Field
 
-from .geometry import Point, Feature
 from .targets import TargetPoint
 from .instruments import BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar
-from .propagation import PropagationRecord, PropagationResponse
-from .coverage import CoverageSample, CoverageRecord, CoverageResponse
+from .propagation import PropagationResponse
+from .coverage import CoverageResponse
 
 class DataMetricRequest(BaseModel):
     """ The data-metrics are calculated for all the target points within the coverage response.
@@ -17,9 +14,8 @@ class DataMetricRequest(BaseModel):
     sensor: Union[BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar] = Field(..., description="Specifications of the sensor.")
     start: AwareDatetime = Field(..., description="Data metrics analysis start time.")
     duration: timedelta = Field(..., ge=0, description="Data metrics analysis duration.")
-    #targets: List[TargetPoint] = Field(..., description="Target points.")
-    propagation_response: List[PropagationResponse] = Field(..., description="Satellite states during the requested analysis period.")
-    coverage_response: List[CoverageResponse] = Field(..., description="Coverage during the requested analysis period.")
+    propagation_response: PropagationResponse = Field(..., description="Satellite states during the requested analysis period.")
+    coverage_response: CoverageResponse = Field(..., description="Coverage during the requested analysis period.")
 
 class BasicSensorDataMetricInstantaneous(BaseModel):
     """ Basic sensor data metrics results calculated at an instant."""
