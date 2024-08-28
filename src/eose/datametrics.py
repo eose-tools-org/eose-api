@@ -1,16 +1,14 @@
 from typing import List, Literal, Union
 from datetime import timedelta
-from geopandas import GeoDataFrame
 from pydantic import AwareDatetime, BaseModel, Field
 
-from .geometry import Point, Feature, FeatureCollection
 from .targets import TargetPoint
 from .instruments import BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar
 from .propagation import PropagationResponse
 from .coverage import CoverageResponse
 
-class DataMetricRequest(BaseModel):
-    """ The data-metrics are calculated for all the target points within the coverage response.
+class DataMetricsRequest(BaseModel):
+    """ The data-metrics are calculated for all the target points included in the coverage response, within the requested time period.
     """
     sensor: Union[BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar] = Field(..., description="Specifications of the sensor.")
     start: AwareDatetime = Field(..., description="Data metrics analysis start time.")
@@ -18,7 +16,7 @@ class DataMetricRequest(BaseModel):
     propagation_response: PropagationResponse = Field(..., description="Satellite states during the requested analysis period.")
     coverage_response: CoverageResponse = Field(..., description="Coverage during the requested analysis period.")
 
-class BasicSensorDataMetricInstantaneous(BaseModel):
+class BasicSensorDataMetricsInstantaneous(BaseModel):
     """ Basic sensor data metrics results calculated at an instant."""
     type: Literal["BasicSensor"] = Field("BasicSensor")
     time: AwareDatetime = Field(..., description="Time instant at which the data metrics are recorded.")
@@ -27,18 +25,23 @@ class BasicSensorDataMetricInstantaneous(BaseModel):
     observation_range: float = Field(..., description="Distance in kilometers from satellite to ground-point during the observation.")
     solar_zenith: float = Field(..., description="Solar Zenith angle in degrees during observation.")
 
-class BasicSensorDataMetricSample(BaseModel):
+class PassiveOpticalScannerInstantaneous(BaseModel):
+    """TBD"""
+    type: Literal["PassiveOpticalScanner"] = Field("PassiveOpticalScanner")
+
+class SyntheticApertureRadarInstantaneous(BaseModel):
+    """TBD"""
+    type: Literal["SyntheticApertureRadar"] = Field("SyntheticApertureRadar")
+
+class DataMetricsSample(BaseModel):
     """ Aggregation of data metrics per overpass (for a target). """
-    type: Literal["BasicSensor"] = Field("BasicSensor")
-    instantaneous_metrics: List[BasicSensorDataMetricInstantaneous] = Field([], description="List of instantaneous data metrics calculated during a single overpass.")
+    instantaneous_metrics: List[Union[BasicSensorDataMetricsInstantaneous, PassiveOpticalScannerInstantaneous, SyntheticApertureRadarInstantaneous]] = Field([], description="List of instantaneous data metrics calculated during a single overpass.")
     
-class BasicSensorDataMetricRecord(BaseModel):
-    """ Aggregation of data metrics per target (across possibly *multiple* overpasses). """
-    type: Literal["BasicSensor"] = Field("BasicSensor")
+class DataMetricsRecord(BaseModel):
+    """ Aggregation of data metrics per target (across multiple overpasses). """
     target: TargetPoint = Field(..., description="Target point.")
-    samples: List[BasicSensorDataMetricSample] = Field([], description="List of data metric samples.")
+    samples: List[DataMetricsSample] = Field([], description="List of data metric samples.")
     
-class BasicSensorDataMetricResponse(BaseModel):
+class DataMetricsResponse(BaseModel):
     """ Aggregation of data metrics over all targets (and all overpasses). """
-    type: Literal["BasicSensor"] = Field("BasicSensor")
-    records: List[BasicSensorDataMetricRecord] = Field([], description="List of data metrics records.")
+    records: List[DataMetricsRecord] = Field([], description="List of data metrics records.")
