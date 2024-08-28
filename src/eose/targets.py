@@ -15,7 +15,7 @@ class TargetPoint(BaseModel):
     Target point on or above the surface of a planetary body.
     """
 
-    id: Optional[Identifier] = Field(None, description="Target identifier.")
+    id: Identifier = Field(..., description="Target identifier.")
     crs: Optional[PlanetaryCoordinateReferenceSystem] = Field(
         None, description="Coordinate reference system in which this target is defined."
     )

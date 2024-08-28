@@ -1,9 +1,11 @@
 from pydantic import BaseModel, Field
 
 from .orbits import GeneralPerturbationsOrbitState
+from .utils import Identifier
 
 
 class Satellite(BaseModel):
+    id: Identifier = Field(..., description="Satellite identifier.")
     orbit: GeneralPerturbationsOrbitState = Field(
         ..., description="Initial orbit state."
     )
