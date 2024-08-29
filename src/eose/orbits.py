@@ -1,9 +1,19 @@
 from datetime import datetime
+from enum import Enum
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
 from sgp4 import exporter, omm
 from sgp4.api import Satrec
+
+
+class Propagator(str, Enum):
+    """
+    Enumeration of different orbit propagators.
+    """
+
+    SGP4 = "sgp4"
+    J2 = "j2"
 
 
 class GeneralPerturbationsOrbitState(BaseModel):

@@ -36,7 +36,7 @@ from .observation import (
     ObservationResponse,
 )
 
-from .orbits import GeneralPerturbationsOrbitState
+from .orbits import GeneralPerturbationsOrbitState, Propagator
 
 from .satellites import Satellite
 
