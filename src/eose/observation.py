@@ -5,16 +5,13 @@ from geopandas import GeoDataFrame
 from pandas import to_timedelta
 from pydantic import AwareDatetime, BaseModel, Field
 
+from .base import BaseRequest
 from .geometry import Point, Feature, FeatureCollection
 from .targets import TargetPoint
-from .satellites import Satellite
 from .utils import Identifier
 
 
-class ObservationRequest(BaseModel):
-    start: AwareDatetime = Field(..., description="Observation analysis start time.")
-    duration: timedelta = Field(..., ge=0, description="Observation analysis duration.")
-    satellites: List[Satellite] = Field(..., description="Member satellites.")
+class ObservationRequest(BaseRequest):
     targets: List[TargetPoint] = Field(..., description="Target points.")
 
 
