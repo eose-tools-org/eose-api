@@ -19,7 +19,8 @@ class ObservationRequest(BaseRequest):
 
 
 class ObservationSample(BaseModel):
-    source: str = Field(None, description="Source of sample observation.")
+    satellite_id: str = Field(None, description="ID of satellite making observation.")
+    instrument_id: str = Field(None, description="ID of instrument making observation.")
     start: AwareDatetime = Field(..., description="Observation sample start time.")
     duration: timedelta = Field(..., ge=0, description="Observation sample duration.")
 
