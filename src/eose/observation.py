@@ -13,6 +13,9 @@ from .utils import Identifier
 
 class ObservationRequest(BaseRequest):
     targets: List[TargetPoint] = Field(..., description="Target points.")
+    instrument_ids: List[Identifier] = Field(
+        ..., description="List of instrument identifiers to consider for analysis."
+    )
 
 
 class ObservationSample(BaseModel):
