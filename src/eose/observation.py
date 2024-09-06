@@ -5,21 +5,22 @@ from geopandas import GeoDataFrame
 from pandas import to_timedelta
 from pydantic import AwareDatetime, BaseModel, Field
 
+from .base import BaseRequest
 from .geometry import Point, Feature, FeatureCollection
 from .targets import TargetPoint
-from .satellites import Satellite
 from .utils import Identifier
 
 
-class ObservationRequest(BaseModel):
-    start: AwareDatetime = Field(..., description="Observation analysis start time.")
-    duration: timedelta = Field(..., ge=0, description="Observation analysis duration.")
-    satellites: List[Satellite] = Field(..., description="Member satellites.")
+class ObservationRequest(BaseRequest):
     targets: List[TargetPoint] = Field(..., description="Target points.")
+    instrument_ids: List[Identifier] = Field(
+        ..., description="List of instrument identifiers to consider for analysis."
+    )
 
 
 class ObservationSample(BaseModel):
-    source: str = Field(None, description="Source of sample observation.")
+    satellite_id: str = Field(None, description="ID of satellite making observation.")
+    instrument_id: str = Field(None, description="ID of instrument making observation.")
     start: AwareDatetime = Field(..., description="Observation sample start time.")
     duration: timedelta = Field(..., ge=0, description="Observation sample duration.")
 

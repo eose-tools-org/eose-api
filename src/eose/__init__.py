@@ -1,5 +1,7 @@
 __version__ = "0.0.3"
 
+from .base import BaseRequest
+
 from .coverage import CoverageSample, CoverageRequest, CoverageRecord, CoverageResponse
 
 from .geometry import (
@@ -34,7 +36,7 @@ from .observation import (
     ObservationResponse,
 )
 
-from .orbits import GeneralPerturbationsOrbitState
+from .orbits import GeneralPerturbationsOrbitState, Propagator
 
 from .satellites import Satellite
 

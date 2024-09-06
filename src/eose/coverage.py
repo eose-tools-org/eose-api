@@ -7,10 +7,16 @@ from pydantic import Field
 
 from .geometry import FeatureCollection
 from .observation import ObservationSample, ObservationRecord, ObservationResponse
+from .utils import Identifier
 
 
 class CoverageRequest(ObservationResponse):
-    pass
+    omit_instrument_ids: List[Identifier] = Field(
+        [], description="List of instrument identifiers to omit from analysis."
+    )
+    omit_satellite_ids: List[Identifier] = Field(
+        [], description="List of satellite identifiers to omit from analysis."
+    )
 
 
 class CoverageSample(ObservationSample):

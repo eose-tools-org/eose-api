@@ -8,18 +8,12 @@ from skyfield.api import load, Distance, Velocity, wgs84
 from skyfield.framelib import itrs
 from skyfield.positionlib import ICRF
 
+from .base import BaseRequest
 from .geometry import Point, Feature, FeatureCollection
-from .satellites import Satellite
 from .utils import Vector, CartesianReferenceFrame, Identifier
 
 
-class PropagationRequest(BaseModel):
-    start: AwareDatetime = Field(..., description="Propagation start time.")
-    duration: timedelta = Field(..., ge=0, description="Propagation duration.")
-    satellites: List[Satellite] = Field(..., description="Member satellites.")
-    time_step: timedelta = Field(
-        ..., gt=0, description="Propagation time step duration."
-    )
+class PropagationRequest(BaseRequest):
     frame: Union[CartesianReferenceFrame, str] = Field(
         CartesianReferenceFrame.ICRF,
         description="Reference frame in which propagation results defined.",
