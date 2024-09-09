@@ -6,33 +6,33 @@ from pandas import to_timedelta
 from pydantic import Field
 
 from .geometry import FeatureCollection
-from .observation import ObservationSample, ObservationRecord, ObservationResponse
+from .access import AccessSample, AccessRecord, AccessResponse
 from .utils import Identifier
 
 
-class CoverageRequest(ObservationResponse):
-    omit_instrument_ids: List[Identifier] = Field(
-        [], description="List of instrument identifiers to omit from analysis."
+class CoverageRequest(AccessResponse):
+    omit_payload_ids: List[Identifier] = Field(
+        [], description="List of payload identifiers to omit from analysis."
     )
     omit_satellite_ids: List[Identifier] = Field(
         [], description="List of satellite identifiers to omit from analysis."
     )
 
 
-class CoverageSample(ObservationSample):
+class CoverageSample(AccessSample):
     revisit: Optional[timedelta] = Field(
-        None, ge=0, description="Elapsed time since prior observation."
+        None, ge=0, description="Elapsed time since prior access."
     )
 
 
-class CoverageRecord(ObservationRecord):
+class CoverageRecord(AccessRecord):
     samples: List[CoverageSample] = Field([], description="List of coverage samples.")
     mean_revisit: Optional[timedelta] = Field(
         None,
         ge=0,
-        description="Mean elapsed time between observations.",
+        description="Mean elapsed time between accesses.",
     )
-    number_samples: int = Field(0, ge=0, description="Number of observation samples.")
+    number_samples: int = Field(0, ge=0, description="Number of access samples.")
 
 
 class CoverageResponse(CoverageRequest):
@@ -41,7 +41,7 @@ class CoverageResponse(CoverageRequest):
         None, ge=0, description="Harmonic mean revisit time over all targets."
     )
     coverage_fraction: float = Field(
-        0, ge=0, le=1, description="Fraction of targets observed at least once."
+        0, ge=0, le=1, description="Fraction of targets accessed at least once."
     )
 
     def as_features(self) -> FeatureCollection:

@@ -11,22 +11,22 @@ from .targets import TargetPoint
 from .utils import Identifier
 
 
-class ObservationRequest(BaseRequest):
+class AccessRequest(BaseRequest):
     targets: List[TargetPoint] = Field(..., description="Target points.")
-    instrument_ids: List[Identifier] = Field(
-        ..., description="List of instrument identifiers to consider for analysis."
+    payload_ids: List[Identifier] = Field(
+        ..., description="List of payload identifiers to consider for analysis."
     )
 
 
-class ObservationSample(BaseModel):
-    satellite_id: str = Field(None, description="ID of satellite making observation.")
-    instrument_id: str = Field(None, description="ID of instrument making observation.")
-    start: AwareDatetime = Field(..., description="Observation sample start time.")
-    duration: timedelta = Field(..., ge=0, description="Observation sample duration.")
+class AccessSample(BaseModel):
+    satellite_id: str = Field(None, description="ID of satellite making access.")
+    instrument_id: str = Field(None, description="ID of instrument making access.")
+    start: AwareDatetime = Field(..., description="Access sample start time.")
+    duration: timedelta = Field(..., ge=0, description="Access sample duration.")
 
     def as_feature(self, target: TargetPoint) -> Feature:
         """
-        Convert this observation sample to a GeoJSON `Feature`.
+        Convert this access sample to a GeoJSON `Feature`.
         """
         return Feature(
             type="Feature",
@@ -35,15 +35,15 @@ class ObservationSample(BaseModel):
         )
 
 
-class ObservationRecord(BaseModel):
+class AccessRecord(BaseModel):
     target_id: Identifier = Field(..., description="Target point identifier.")
-    samples: List[ObservationSample] = Field(
-        [], description="List of observation samples."
+    samples: List[AccessSample] = Field(
+        [], description="List of access samples."
     )
 
     def as_feature(self, target: TargetPoint) -> Feature:
         """
-        Convert this observation record to a GeoJSON `Feature`.
+        Convert this access record to a GeoJSON `Feature`.
         """
         return Feature(
             type="Feature",
@@ -53,19 +53,19 @@ class ObservationRecord(BaseModel):
 
     def as_geometry(self, target: TargetPoint) -> Point:
         """
-        Convert this observation record to a GeoJSON `Point` geometry.
+        Convert this access record to a GeoJSON `Point` geometry.
         """
         return target.as_geometry()
 
 
-class ObservationResponse(ObservationRequest):
-    target_records: List[ObservationRecord] = Field(
-        [], description="Observation results"
+class AccessResponse(AccessRequest):
+    target_records: List[AccessRecord] = Field(
+        [], description="Access results"
     )
 
     def as_features(self) -> FeatureCollection:
         """
-        Converts this observation response to a GeoJSON `FeatureCollection`.
+        Converts this access response to a GeoJSON `FeatureCollection`.
         """
         return FeatureCollection(
             type="FeatureCollection",
@@ -84,7 +84,7 @@ class ObservationResponse(ObservationRequest):
 
     def as_dataframe(self) -> GeoDataFrame:
         """
-        Converts this observation response to a `geopandas.GeoDataFrame`.
+        Converts this access response to a `geopandas.GeoDataFrame`.
         """
         gdf = GeoDataFrame.from_features(self.as_features())
         gdf["duration"] = to_timedelta(gdf["duration"])  # helper for type coersion

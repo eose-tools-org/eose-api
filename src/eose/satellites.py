@@ -5,10 +5,10 @@ from .orbits import GeneralPerturbationsOrbitState
 from .utils import Identifier
 
 
-class Instrument(BaseModel):
-    id: Identifier = Field(..., description="Instrument identifier.")
+class Payload(BaseModel):
+    id: Identifier = Field(..., description="Payload identifier.")
     field_of_view: float = Field(
-        gt=0, le=180, description="Angular instrument field of view."
+        gt=0, le=180, description="Angular payload field of view."
     )
 
 
@@ -17,4 +17,4 @@ class Satellite(BaseModel):
     orbit: GeneralPerturbationsOrbitState = Field(
         ..., description="Initial orbit state."
     )
-    instruments: List[Instrument] = Field([], description="Satellite instruments.")
+    payloads: List[Payload] = Field([], description="Satellite payloads.")
