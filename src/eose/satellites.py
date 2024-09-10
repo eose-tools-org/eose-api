@@ -1,7 +1,8 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Union
 
 from .orbits import GeneralPerturbationsOrbitState
+from .instruments import BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar
 from .utils import Identifier
 
 
@@ -17,4 +18,4 @@ class Satellite(BaseModel):
     orbit: GeneralPerturbationsOrbitState = Field(
         ..., description="Initial orbit state."
     )
-    payloads: List[Payload] = Field([], description="Satellite payloads.")
+    payloads: List[Union[Payload, BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar]] = Field([], description="Satellite payloads.")
