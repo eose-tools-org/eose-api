@@ -29,16 +29,16 @@ from .geometry import (
 
 from .grids import UniformAngularGrid
 
-from .observation import (
-    ObservationSample,
-    ObservationRequest,
-    ObservationRecord,
-    ObservationResponse,
+from .access import (
+    AccessSample,
+    AccessRequest,
+    AccessRecord,
+    AccessResponse,
 )
 
 from .orbits import GeneralPerturbationsOrbitState, Propagator
 
-from .satellites import Satellite
+from .satellites import Satellite, Payload
 
 from .instruments import BasicSensor
 
