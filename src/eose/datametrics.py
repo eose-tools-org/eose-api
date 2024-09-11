@@ -7,7 +7,8 @@ from .propagation import PropagationResponse
 
 class DataMetricsRequest(AccessResponse, PropagationResponse):
     """ The data-metrics are calculated for all the target points included in the coverage response, within the requested time period.
-        Information about the satellite specs, instrument specs is obtained from ``ObservationResponse`` or ``PropagationResponse``.
+        Data metrics are calculated for all the ``AccessRecords`` available in the ``AccessResponse``.
+        Information about the satellite specs is obtained from ``ObservationResponse`` or ``PropagationResponse``.
         The satellite states info is available with the ``PropagationResponse`` and the access info is available with the ``ObservationResponse`.
     """
     # replace below with instrument ids
@@ -15,7 +16,7 @@ class DataMetricsRequest(AccessResponse, PropagationResponse):
     start: AwareDatetime = Field(..., description="Data metrics analysis start time.")
     duration: timedelta = Field(..., ge=0, description="Data metrics analysis duration.")
     #propagation_response: PropagationResponse = Field(..., description="Satellite states during the requested analysis period.")
-    #coverage_response: CoverageResponse = Field(..., description="Coverage during the requested analysis period.")
+    #coverage_response: CoverageResponse = Field(..., description="Coverage during the requested analysis period.")    
 
 class BasicSensorDataMetricsInstantaneous(BaseModel):
     """ Basic sensor data metrics results calculated at an instant."""
@@ -35,7 +36,7 @@ class SyntheticApertureRadarInstantaneous(BaseModel):
     type: Literal["SyntheticApertureRadar"] = Field("SyntheticApertureRadar")
 
 class DataMetricsSample(AccessSample):
-    """ Aggregation of data metrics per overpass (for a target). """
+    """ Aggregation of data metrics per overpass (for a target) for a satellite, instrument pair specified in the ``AccessSample``. """
     instantaneous_metrics: List[Union[BasicSensorDataMetricsInstantaneous, PassiveOpticalScannerInstantaneous, SyntheticApertureRadarInstantaneous]] = Field([], description="List of instantaneous data metrics calculated during a single overpass.")
     
 class DataMetricsRecord(AccessRecord):
