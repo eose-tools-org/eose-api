@@ -11,12 +11,8 @@ class DataMetricsRequest(AccessResponse, PropagationResponse):
         Information about the satellite specs is obtained from ``ObservationResponse`` or ``PropagationResponse``.
         The satellite states info is available with the ``PropagationResponse`` and the access info is available with the ``ObservationResponse`.
     """
-    # replace below with instrument ids
-    #sensor: Union[BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar] = Field(..., description="Specifications of the sensor.")
     start: AwareDatetime = Field(..., description="Data metrics analysis start time.")
-    duration: timedelta = Field(..., ge=0, description="Data metrics analysis duration.")
-    #propagation_response: PropagationResponse = Field(..., description="Satellite states during the requested analysis period.")
-    #coverage_response: CoverageResponse = Field(..., description="Coverage during the requested analysis period.")    
+    duration: timedelta = Field(..., ge=0, description="Data metrics analysis duration.")   
 
 class BasicSensorDataMetricsInstantaneous(BaseModel):
     """ Basic sensor data metrics results calculated at an instant."""
@@ -41,10 +37,8 @@ class DataMetricsSample(AccessSample):
     
 class DataMetricsRecord(AccessRecord):
     """ Aggregation of data metrics per target (across multiple overpasses). """
-    #target: TargetPoint = Field(..., description="Target point.")
     samples: List[DataMetricsSample] = Field([], description="List of data metric samples.")
     
 class DataMetricsResponse(DataMetricsRequest):
     """ Aggregation of data metrics over all targets (and all overpasses). """
-    #records: List[DataMetricsRecord] = Field([], description="List of data metrics records.")
     target_records: List[DataMetricsRecord] = Field([], description="List of data metrics records.")
