@@ -25,7 +25,7 @@ class BasicSensor(BaseModel):
     name: Optional[str] = Field(None, description="Sensor name.")
     id: Optional[str] = Field(None, description="Sensor identifier.")
     mass: Optional[float] = Field(None, gt=0, description="Mass of the sensor in kilograms.")
-    volume: Optional[float] = Field(None, gt=0, description="Volume of the sensor in cubic meters.")
+    volume: Optional[float] = Field(None, gt=0, description="Volume of the sensor in cubic centimeter.")
     power: Optional[float] = Field(None, gt=0, description="(Average) Power consumption of the sensor in watts.")
     orientation: Quaternion = Field(
         default_factory=lambda: list([0, 0, 0, 1]),
