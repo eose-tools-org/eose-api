@@ -2,7 +2,6 @@ from typing import Optional, Literal, Union
 from pydantic import BaseModel, Field, model_validator
 from enum import Enum
 
-# Ensure the import path for Quaternion is correct
 from eose.utils import Quaternion
 
 class CircularGeometry(BaseModel):
@@ -29,7 +28,7 @@ class BasicSensor(BaseModel):
     power: Optional[float] = Field(None, gt=0, description="(Average) Power consumption of the sensor in watts.")
     orientation: Quaternion = Field(
         default_factory=lambda: list([0, 0, 0, 1]),
-        description="Orientation of the instrument view, relative to the spacecraft body-fixed frame.",
+        description="Orientation of the instrument view, relative to the spacecraft body-fixed frame. It is assumed that the instrument's field of view (FOV) is aligned with its z-axis.",
     )
     field_of_view: Union[CircularGeometry, RectangularGeometry] = Field(
         default_factory=lambda: CircularGeometry(diameter=30), 
