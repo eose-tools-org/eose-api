@@ -18,7 +18,7 @@ class SpacecraftBus(BaseModel):
     mass: Optional[float] = Field(None, gt=0, description="Mass of the sensor in kilograms.")
     volume: Optional[float] = Field(None, gt=0, description="Volume of the sensor in cubic centimeter.")
     orientation: Optional[Union[FixedOrientation, Quaternion]] = Field(
-        None,
+        FixedOrientation.NADIR_GEOCENTRIC,
         description="Orientation of the spacecraft body-fixed frame, relative to requested frame.",
     )
 
