@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from datetime import timedelta
 
 from geopandas import GeoDataFrame
@@ -9,13 +9,14 @@ from .base import BaseRequest
 from .geometry import Point, Feature, FeatureCollection
 from .targets import TargetPoint
 from .utils import Identifier
-
+from .propagation import PropagationRecord
 
 class AccessRequest(BaseRequest):
     targets: List[TargetPoint] = Field(..., description="Target points.")
     payload_ids: List[Identifier] = Field(
         ..., description="List of payload identifiers to consider for analysis."
     )
+    propagation_records: Union[None, List[PropagationRecord]] = Field(None, description="Optional propagation records input, which can be utilized in access calculations.")
 
 
 class AccessSample(BaseModel):
