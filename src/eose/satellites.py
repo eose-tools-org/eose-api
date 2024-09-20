@@ -13,7 +13,7 @@ class Payload(BaseModel):
         gt=0, le=180, description="Angular payload field of view."
     )
 
-class SpacecraftBus(BaseModel):
+class SatelliteBus(BaseModel):
     id: Identifier = Field(..., description="Spacecraft bus identifier.")
     mass: Optional[float] = Field(None, gt=0, description="Mass of the sensor in kilograms.")
     volume: Optional[float] = Field(None, gt=0, description="Volume of the sensor in cubic centimeter.")
@@ -28,3 +28,4 @@ class Satellite(BaseModel):
         ..., description="Initial orbit state."
     )
     payloads: List[Union[Payload, BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar]] = Field([], description="Satellite payloads.")
+    satellite_bus: Optional[SatelliteBus] = Field(None, description="Satellite bus specification.")
