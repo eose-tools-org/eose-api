@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Optional
 from datetime import timedelta
 
 from geopandas import GeoDataFrame
@@ -16,7 +16,7 @@ class AccessRequest(BaseRequest):
     payload_ids: List[Identifier] = Field(
         ..., description="List of payload identifiers to consider for analysis."
     )
-    propagation_records: Union[None, List[PropagationRecord]] = Field(None, description="Optional propagation records input, which can be utilized in access calculations.")
+    propagation_records: Optional[List[PropagationRecord]] = Field(None, description="Optional propagation records input, which can be utilized in access calculations.")
 
 
 class AccessSample(BaseModel):
