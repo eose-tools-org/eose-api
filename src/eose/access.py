@@ -1,4 +1,4 @@
-from typing import List, Union, Optional
+from typing import List, Optional
 from datetime import timedelta
 
 from geopandas import GeoDataFrame
