@@ -36,17 +36,17 @@ class CartesianReferenceFrame(str, Enum):
 
 class FixedOrientation(str, Enum):
     """
-        The axis of the Nadir-pointing reference frame are defined as follows:
+    The axis of the Nadir-pointing reference frame are defined as follows:
 
-        * :math:`\bf X_{np}` axis: :math:`-({\bf Z_{np}} \times {\bf V})`, where :math:`\bf V` is the Velocity vector of satellite in EARTH_FIXED frame
-                
-        * :math:`\bf Y_{np}` axis: :math:`({\bf Z_{np}} \times {\bf X_{np}})`
-                
-        * :math:`\bf Z_{np}` axis: Aligned to Nadir vector (i.e. the negative of the position vector of satellite in case of the `NADIR_GEOCENTRIC`.)
-    
-        (Note that this results in roll axis as `Y_{np}` and not `X_{np}`.)
-        
+    * :math:`\bf X_{np}` axis: :math:`-({\bf Z_{np}} \times {\bf V})`, where :math:`\bf V` is the Velocity vector of satellite in EARTH_FIXED frame
+
+    * :math:`\bf Y_{np}` axis: :math:`({\bf Z_{np}} \times {\bf X_{np}})`
+
+    * :math:`\bf Z_{np}` axis: Aligned to Nadir vector (i.e. the negative of the position vector of satellite in case of the `NADIR_GEOCENTRIC`.)
+
+    (Note that this results in roll axis as `Y_{np}` and not `X_{np}`.)
+
     """
+
     NADIR_GEOCENTRIC = "NADIR_GEOCENTRIC"  # nadir pointing through geocenter
     NADIR_GEODETIC = "NADIR_GEODETIC"  # nadir normal to ellipsoid surface
-
