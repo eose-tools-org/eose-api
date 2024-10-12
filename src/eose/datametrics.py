@@ -43,13 +43,34 @@ class BasicSensorDataMetricsInstantaneous(BaseModel):
     )
 
 
-class PassiveOpticalScannerInstantaneous(BaseModel):
-    """TBD"""
+class PassiveOpticalScannerDataMetricsInstantaneous(BaseModel):
+    """Passive optical scanner data metrics results calculated at an instant."""
 
     type: Literal["PassiveOpticalScanner"] = Field("PassiveOpticalScanner")
+    time: AwareDatetime = Field(
+        ..., description="Time instant at which the data metrics are recorded."
+    )
+    noise_equivalent_delta_T: float = Field(
+        ...,
+        description="Noise Equivalent delta temperature in Kelvin. Characterizes the instrument in its ability to resolve temperature variations for a given background temperature.",
+    )
+    dynamic_range: float = Field(
+        ...,
+        description="Dynamic Range. Is the quotient of the signal and read-out noise electrons the sensor sees between dark and bright scenes.",
+    )
+    signal_to_noise_ratio: float = Field(
+        ...,
+        description="Signal-to-noise Ratio.",
+    )
+    along_track_resolution: float = Field(
+        ..., description="Spatial resolution in meters of a hypothetical ground-pixel centered about observation point in the along-track direction."
+    )
+    cross_track_resolution: float = Field(
+        ..., description="Spatial resolution in meters of a hypothetical ground-pixel centered about observation point in the cross-track direction."
+    )
 
 
-class SyntheticApertureRadarInstantaneous(BaseModel):
+class SyntheticApertureRadarDataMetricsInstantaneous(BaseModel):
     """TBD"""
 
     type: Literal["SyntheticApertureRadar"] = Field("SyntheticApertureRadar")
@@ -61,8 +82,8 @@ class DataMetricsSample(AccessSample):
     instantaneous_metrics: List[
         Union[
             BasicSensorDataMetricsInstantaneous,
-            PassiveOpticalScannerInstantaneous,
-            SyntheticApertureRadarInstantaneous,
+            PassiveOpticalScannerDataMetricsInstantaneous,
+            SyntheticApertureRadarDataMetricsInstantaneous,
         ]
     ] = Field(
         [],
