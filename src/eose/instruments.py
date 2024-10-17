@@ -65,7 +65,8 @@ class BasicSensor(BaseModel):
         None, ge=1, description="Bits per pixel for the sensor's data output."
     )
 
-class ScanTechnique(str, Enum):
+class OpticalInstrumentScanTechnique(str, Enum):
+    """Enumeration of recognized SAR scanning techniques."""
     PUSHBROOM = "PUSHBROOM"
     WHISKBROOM = "WHISKBROOM"
     MATRIX_IMAGER = "MATRIX_IMAGER"
@@ -91,15 +92,14 @@ class PassiveOpticalScanner(BaseModel):
         default_factory=lambda: CircularGeometry(diameter=30),
         description="Field of view of the sensor."
     )
-    scene_field_of_view: Union[CircularGeometry, RectangularGeometry] = Field(
-        default_factory=lambda: CircularGeometry(diameter=30),
-        description="Scene field of view of the sensor."
+    scene_field_of_view: Optional[Union[CircularGeometry, RectangularGeometry]] = Field(
+        None, description="Scene field of view of the sensor."
     )
     data_rate: Optional[float] = Field(
         None, gt=0, description="Data rate of the sensor in megabits per second."
     )
-    scan_technique: Union[ScanTechnique, str] = Field(
-        ScanTechnique.MATRIX_IMAGER,
+    scan_technique: Union[OpticalInstrumentScanTechnique, str] = Field(
+        OpticalInstrumentScanTechnique.MATRIX_IMAGER,
         description="Scan technique"
     )
     number_detector_rows: Optional[int] = Field(
@@ -144,6 +144,38 @@ class PassiveOpticalScanner(BaseModel):
     max_detector_exposure_time: Optional[float] = Field(
         None, ge=0, description="Maximum exposure time of detector in seconds."
     )
+
+class SyntheticApertureRadarScanTechnique(str, Enum):
+    """Enumeration of recognized SAR scanning techniques.
+    
+    :cvar STRIPMAP: Stripmap imaging operation.
+    :vartype STRIPMAP: str
+
+    :cvar SCANSAR: ScanSAR imaging operation. Multiple strips are scanned in the cross-track direction to increase the overall swath-width 
+                   (but resulting in a coarser azimuth resolution due to reduced scan-time per strip). 
+    :vartype SCANSAR: str
+    
+    """
+    STRIPMAP = "STRIPMAP"
+    SCANSAR = "SCANSAR"
+
+
+class SyntheticApertureRadarPolarization(str, Enum):
+    """Enumeration of recognized SAR polarization types.
+    
+    :cvar SINGLE: Single transmit and receive polarization.
+    :vartype SINGLE: str
+
+    :cvar COMPACT: Single transmit and dual receive polarization.
+    :vartype COMPACT: str
+
+    :cvar DUAL: Dual transmit and dual receive polarization.
+    :vartype DUAL: str    
+    
+    """
+    SINGLE = "SINGLE",
+    COMPACT = "COMPACT",
+    DUAL = "DUAL"
 
 class SyntheticApertureRadar(BaseModel):
     type: Literal["SyntheticApertureRadar"] = Field("SyntheticApertureRadar")
