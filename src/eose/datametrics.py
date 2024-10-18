@@ -70,10 +70,10 @@ class PassiveOpticalScannerDataMetricsInstantaneous(BaseModel):
     )
 
 
-class SyntheticApertureRadarDataMetricsInstantaneous(BaseModel):
+class SinglePolStripMapSARInstantaneous(BaseModel):
     """TBD"""
 
-    type: Literal["SyntheticApertureRadar"] = Field("SyntheticApertureRadar")
+    type: Literal["SinglePolStripMapSAR"] = Field("SinglePolStripMapSAR")
 
 
 class DataMetricsSample(AccessSample):
@@ -83,7 +83,7 @@ class DataMetricsSample(AccessSample):
         Union[
             BasicSensorDataMetricsInstantaneous,
             PassiveOpticalScannerDataMetricsInstantaneous,
-            SyntheticApertureRadarDataMetricsInstantaneous,
+            SinglePolStripMapSARInstantaneous,
         ]
     ] = Field(
         [],

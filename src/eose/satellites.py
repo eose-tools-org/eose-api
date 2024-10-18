@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List, Union, Optional
 
 from .orbits import GeneralPerturbationsOrbitState
-from .instruments import BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar
+from .instruments import BasicSensor, PassiveOpticalScanner, SinglePolStripMapSAR
 from .utils import Identifier, Quaternion, FixedOrientation
 
 from eose.utils import Quaternion
@@ -35,7 +35,7 @@ class Satellite(BaseModel):
         ..., description="Initial orbit state."
     )
     payloads: List[
-        Union[Payload, BasicSensor, PassiveOpticalScanner, SyntheticApertureRadar]
+        Union[Payload, BasicSensor, PassiveOpticalScanner, SinglePolStripMapSAR]
     ] = Field([], description="Satellite payloads.")
     satellite_bus: Optional[SatelliteBus] = Field(
         None, description="Satellite bus specification."
