@@ -24,14 +24,14 @@ class RectangularGeometry(BaseModel):
     """
 
     type: Literal["RectangularGeometry"] = Field("RectangularGeometry")
-    angle_height: Optional[float] = Field(
-        None,
+    angle_height: float = Field(
+        ...,
         gt=0,
         lt=180,
         description="Angular height (about the sensor X-axis) of the rectangular geometry in degrees.",
     )
-    angle_width: Optional[float] = Field(
-        None,
+    angle_width: float = Field(
+        ...,
         gt=0,
         lt=180,
         description="Angular width (about the sensor Y-axis) of the rectangular geometry in degrees.",
@@ -145,37 +145,7 @@ class PassiveOpticalScanner(BaseModel):
         None, ge=0, description="Maximum exposure time of detector in seconds."
     )
 
-class SyntheticApertureRadarScanTechnique(str, Enum):
-    """Enumeration of recognized SAR scanning techniques.
-    
-    :cvar STRIPMAP: Stripmap imaging operation.
-    :vartype STRIPMAP: str
-
-    :cvar SCANSAR: ScanSAR imaging operation. Multiple strips are scanned in the cross-track direction to increase the overall swath-width 
-                   (but resulting in a coarser azimuth resolution due to reduced scan-time per strip). 
-    :vartype SCANSAR: str
-    
-    """
-    STRIPMAP = "STRIPMAP"
-    SCANSAR = "SCANSAR"
-
-
-class SyntheticApertureRadarPolarization(str, Enum):
-    """Enumeration of recognized SAR polarization types.
-    
-    :cvar SINGLE: Single transmit and receive polarization.
-    :vartype SINGLE: str
-
-    :cvar COMPACT: Single transmit and dual receive polarization.
-    :vartype COMPACT: str
-
-    :cvar DUAL: Dual transmit and dual receive polarization.
-    :vartype DUAL: str    
-    
-    """
-    SINGLE = "SINGLE",
-    COMPACT = "COMPACT",
-    DUAL = "DUAL"
 
 class SyntheticApertureRadar(BaseModel):
     type: Literal["SyntheticApertureRadar"] = Field("SyntheticApertureRadar")
+
