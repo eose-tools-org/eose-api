@@ -109,37 +109,37 @@ class PassiveOpticalScanner(BaseModel):
         None, ge=1, description="Number of detector columns (along the X-axis of the sensor body-fixed frame). If the sensor body-fixed frame is aligned to the nadir-pointing frame, then this direction corresponds to the cross-track direction."
     )
     aperture_dia: float = Field(
-        None, ge=0, description="Telescope aperture diameter in meters."
+        ..., ge=0, description="Telescope aperture diameter in meters."
     )
     F_num: float = Field(
-        None, gt=0, description="F-number/ F# of lens."
+        ..., gt=0, description="F-number/ F# of lens."
     )
     focal_length: float = Field(
-        None, gt=0, description="Focal length of lens in meters."
+        ..., gt=0, description="Focal length of lens in meters."
     )
     operating_wavelength: float = Field(
-        None, gt=0, description="Center operating wavelength in meters."
+        ..., gt=0, description="Center operating wavelength in meters."
     )
     bandwidth: float = Field(
-        None, gt=0, description="Bandwidth of operation in meters. It is assumed that the detector element supports the entire bandwidth with same quantum efficiency for all wavelengths. Assumption maybe reasonable for narrow-bandwidths."
+        ..., gt=0, description="Bandwidth of operation in meters. It is assumed that the detector element supports the entire bandwidth with same quantum efficiency for all wavelengths. Assumption maybe reasonable for narrow-bandwidths."
     )
     quantum_efficiency: float = Field(
-        None, ge=0, le=1, description="Quantum efficiency of the detector element."
+        ..., ge=0, le=1, description="Quantum efficiency of the detector element."
     )
     optics_sys_eff: Optional[float] = Field(
         1, gt=0, le=1, description="Optical systems efficiency."
     )
     number_of_read_out_E: float = Field(
-        None, ge=0, description="Number of read out electrons of the detector."
+        ..., ge=0, description="Number of read out electrons of the detector."
     )
     target_black_body_temp: float = Field(
-        None, ge=0, description="Target body's equivalent black-body temperature in Kelvin."
+        ..., ge=0, description="Target body's equivalent black-body temperature in Kelvin."
     )
     bits_per_pixel: Optional[int] = Field(
         None, ge=1, description="Bits per pixel for the sensor's data output."
     )
     detector_width: float = Field(
-        None, ge=0, description="Width of detector element in meters."
+        ..., ge=0, description="Width of detector element in meters."
     )
     max_detector_exposure_time: Optional[float] = Field(
         None, ge=0, description="Maximum exposure time of detector in seconds."
