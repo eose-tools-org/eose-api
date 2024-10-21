@@ -40,6 +40,8 @@ from .orbits import GeneralPerturbationsOrbitState, Propagator
 
 from .satellites import Satellite, Payload
 
+from .instruments import BasicSensor
+
 from .targets import TargetPoint
 
 from .pointing import PointingSample, PointingRequest, PointingRecord, PointingResponse

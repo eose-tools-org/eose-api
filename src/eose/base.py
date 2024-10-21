@@ -8,8 +8,8 @@ from .satellites import Satellite
 
 
 class BaseRequest(BaseModel):
-    start: AwareDatetime = Field(..., description="Observation analysis start time.")
-    duration: timedelta = Field(..., ge=0, description="Observation analysis duration.")
+    start: AwareDatetime = Field(..., description="Requested operation start time.")
+    duration: timedelta = Field(..., ge=0, description="Requested operation duration.")
     satellites: List[Satellite] = Field(..., description="Member satellites.")
     time_step: timedelta = Field(
         timedelta(seconds=10), gt=0, description="Propagation time step duration."

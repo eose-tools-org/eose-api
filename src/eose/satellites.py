@@ -1,8 +1,11 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Union, Optional
 
 from .orbits import GeneralPerturbationsOrbitState
-from .utils import Identifier
+from .instruments import BasicSensor, PassiveOpticalScanner, SinglePolStripMapSAR
+from .utils import Identifier, Quaternion, FixedOrientation
+
+from eose.utils import Quaternion
 
 
 class Payload(BaseModel):
@@ -12,9 +15,28 @@ class Payload(BaseModel):
     )
 
 
+class SatelliteBus(BaseModel):
+    id: Identifier = Field(..., description="Spacecraft bus identifier.")
+    mass: Optional[float] = Field(
+        None, gt=0, description="Mass of the sensor in kilograms."
+    )
+    volume: Optional[float] = Field(
+        None, gt=0, description="Volume of the sensor in cubic centimeter."
+    )
+    orientation: Optional[Union[FixedOrientation, Quaternion]] = Field(
+        FixedOrientation.NADIR_GEOCENTRIC,
+        description="Orientation of the spacecraft body-fixed frame, relative to requested frame.",
+    )
+
+
 class Satellite(BaseModel):
     id: Identifier = Field(..., description="Satellite identifier.")
     orbit: GeneralPerturbationsOrbitState = Field(
         ..., description="Initial orbit state."
     )
-    payloads: List[Payload] = Field([], description="Satellite payloads.")
+    payloads: List[
+        Union[Payload, BasicSensor, PassiveOpticalScanner, SinglePolStripMapSAR]
+    ] = Field([], description="Satellite payloads.")
+    satellite_bus: Optional[SatelliteBus] = Field(
+        None, description="Satellite bus specification."
+    )

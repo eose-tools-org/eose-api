@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from datetime import timedelta
 
 from geopandas import GeoDataFrame
@@ -9,12 +9,17 @@ from .base import BaseRequest
 from .geometry import Point, Feature, FeatureCollection
 from .targets import TargetPoint
 from .utils import Identifier
+from .propagation import PropagationRecord
 
 
 class AccessRequest(BaseRequest):
     targets: List[TargetPoint] = Field(..., description="Target points.")
     payload_ids: List[Identifier] = Field(
         ..., description="List of payload identifiers to consider for analysis."
+    )
+    propagation_records: Optional[List[PropagationRecord]] = Field(
+        None,
+        description="Optional propagation records input, which can be utilized in access calculations.",
     )
 
 
@@ -37,9 +42,7 @@ class AccessSample(BaseModel):
 
 class AccessRecord(BaseModel):
     target_id: Identifier = Field(..., description="Target point identifier.")
-    samples: List[AccessSample] = Field(
-        [], description="List of access samples."
-    )
+    samples: List[AccessSample] = Field([], description="List of access samples.")
 
     def as_feature(self, target: TargetPoint) -> Feature:
         """
@@ -59,9 +62,7 @@ class AccessRecord(BaseModel):
 
 
 class AccessResponse(AccessRequest):
-    target_records: List[AccessRecord] = Field(
-        [], description="Access results"
-    )
+    target_records: List[AccessRecord] = Field([], description="Access results")
 
     def as_features(self) -> FeatureCollection:
         """
