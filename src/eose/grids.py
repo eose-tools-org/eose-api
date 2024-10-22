@@ -20,10 +20,11 @@ class UniformAngularGrid(BaseModel):
 
     The grid enumerates target points from West-to-East (column index j)
     followed by South-to-North (row index i) with properties assigned by:
-     * `id = i + j * floor(360/delta_longitude)`
-     * `longitude = -180 + (i + 0.5) * delta_longitude`
-     * `latitude = -90 + (j + 0.5) * delta_latitude`
-
+    
+      * `id = i + j * floor(360/delta_longitude)`
+      * `longitude = -180 + (i + 0.5) * delta_longitude`
+      * `latitude = -90 + (j + 0.5) * delta_latitude`
+     
     An optional region serves as a mask to constrain targets.
     """
 

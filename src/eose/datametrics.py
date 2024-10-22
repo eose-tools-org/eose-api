@@ -10,7 +10,7 @@ class DataMetricsRequest(AccessResponse, PropagationResponse):
     """The data-metrics are calculated for all the target points included in the coverage response, within the requested time period.
     Data metrics are calculated for all the ``AccessRecords`` available in the ``AccessResponse``.
     Information about the satellite specs is obtained from ``ObservationResponse`` or ``PropagationResponse``.
-    The satellite states info is available with the ``PropagationResponse`` and the access info is available with the ``ObservationResponse`.
+    The satellite states info is available with the ``PropagationResponse`` and the access info is available with the ``ObservationResponse``.
     """
 
     start: AwareDatetime = Field(..., description="Data metrics analysis start time.")

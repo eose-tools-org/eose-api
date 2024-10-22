@@ -38,6 +38,13 @@ dev = [
     "pylint",
     "pylint-pydantic",
 ]
+docs = [
+    "autodoc_pydantic >= 2",
+    "docutils",
+    "myst-nb",
+    "sphinx >= 7",
+    "sphinx-rtd-theme"
+]
 examples = [
     "ipykernel",
     "joblib",
