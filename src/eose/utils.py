@@ -22,6 +22,9 @@ Quaternion = Annotated[
 
 
 class PlanetaryCoordinateReferenceSystem(str, Enum):
+    """
+    Enumeration of planetary coordinate reference systems.
+    """
     EPSG_4326 = "EPSG:4326"  # Earth WGS 1984
     ESRI_104902 = "ESRI:104902"  # Venus 2000
     ESRI_104903 = "ESRI:104903"  # Moon 2000
@@ -30,12 +33,15 @@ class PlanetaryCoordinateReferenceSystem(str, Enum):
 
 
 class CartesianReferenceFrame(str, Enum):
+    """
+    Enumeration of Cartestian reference frames.
+    """
     ITRS = "ITRS"  # International Terrestrial Reference System (ITRS)
     ICRF = "ICRF"  # International Celestial Reference Frame
 
 
 class FixedOrientation(str, Enum):
-    """
+    r"""
     The axis of the Nadir-pointing reference frame are defined as follows:
 
     * :math:`\bf X_{np}` axis: :math:`-({\bf Z_{np}} \times {\bf V})`, where :math:`\bf V` is the Velocity vector of satellite in EARTH_FIXED frame

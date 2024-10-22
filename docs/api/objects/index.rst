@@ -6,7 +6,6 @@ Object Models
 
   geometry.rst
   targets.rst
-  grids.rst
   instruments.rst
   orbits.rst
   satellites.rst

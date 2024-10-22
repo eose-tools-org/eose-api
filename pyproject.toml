@@ -43,7 +43,8 @@ docs = [
     "docutils",
     "myst-nb",
     "sphinx >= 7",
-    "sphinx-rtd-theme"
+    "sphinx-autodoc-typehints",
+    "sphinx-rtd-theme",
 ]
 examples = [
     "ipykernel",

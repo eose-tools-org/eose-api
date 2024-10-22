@@ -6,3 +6,4 @@ API Reference
 
   objects/index.rst
   analysis/index.rst
+  utils.rst

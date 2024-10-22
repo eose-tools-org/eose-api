@@ -1,5 +1,5 @@
-Geometry Objects
-^^^^^^^^^^^^^^^^
+Geometry
+^^^^^^^^
 
 .. autopydantic_model:: eose.geometry.Point
   :members:
