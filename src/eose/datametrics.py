@@ -13,10 +13,7 @@ class DataMetricsRequest(AccessResponse, PropagationResponse):
     The satellite states info is available with the ``PropagationResponse`` and the access info is available with the ``ObservationResponse``.
     """
 
-    start: AwareDatetime = Field(..., description="Data metrics analysis start time.")
-    duration: timedelta = Field(
-        ..., ge=0, description="Data metrics analysis duration."
-    )
+    pass
 
 
 class BasicSensorDataMetricsInstantaneous(BaseModel):
