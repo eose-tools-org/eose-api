@@ -13,6 +13,10 @@ author = 'EOSE API Contributors'
 import eose
 release = eose.__version__
 
+# workaround to NameError when building sphinx
+# see: https://github.com/pydantic/pydantic/discussions/7763
+from eose.datametrics import DataMetricsRequest
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
