@@ -1,0 +1,59 @@
+[build-system]
+requires = [
+    "setuptools >= 57.0.0",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eose-api"
+description = "Earth Observing Systems Engineering APIs"
+authors = [
+    {"name" = "Paul T. Grogan", "email" = "paul.grogan@asu.edu"}
+]
+readme = "README.md"
+requires-python = ">=3.8, <3.11"
+license = {text = "BSD License"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 1 - Planning"
+]
+dependencies = [
+    "geojson-pydantic",
+    "geopandas >= 0.13.2",
+    "pydantic >= 2.6",
+    "shapely >= 2",
+    "skyfield",
+    "sgp4",
+]
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.optional-dependencies]
+dev = [
+    "black[jupyter] >= 24.2",
+    "pylint",
+    "pylint-pydantic",
+]
+docs = [
+    "autodoc_pydantic >= 2",
+    "docutils",
+    "myst-nb",
+    "sphinx >= 7",
+    "sphinx-autodoc-typehints",
+    "sphinx-rtd-theme",
+]
+examples = [
+    "ipykernel",
+    "joblib",
+    "matplotlib",
+    "pandas",
+    "scipy",
+    "tatc",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "eose.__version__"}
