@@ -1,5 +1,8 @@
 Utilities
-^^^^^^^^^
+---------
+
+Enumerations
+^^^^^^^^^^^^
 
 .. autofunction:: eose.utils.PlanetaryCoordinateReferenceSystem
     

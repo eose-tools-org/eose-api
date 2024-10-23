@@ -44,7 +44,6 @@ napoleon_use_ivar = False
 napoleon_use_param = True
 napoleon_use_rtype = True
 autodoc_pydantic_model_show_json = True
-autodoc_pydantic_model_show_config = False
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "geopandas": ("https://geopandas.org/en/stable/", None),

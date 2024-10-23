@@ -2,13 +2,13 @@ Pointing Analysis
 ^^^^^^^^^^^^^^^^^
 
 .. autopydantic_model:: eose.pointing.PointingRequest
-  :members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.pointing.PointingSample
-  :members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.pointing.PointingRecord
-  :members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.pointing.PointingResponse
-  :members:
+    :inherited-members: BaseModel

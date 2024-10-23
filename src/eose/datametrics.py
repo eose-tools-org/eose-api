@@ -1,5 +1,4 @@
 from typing import List, Literal, Union
-from datetime import timedelta
 from pydantic import AwareDatetime, BaseModel, Field
 
 from .access import AccessResponse, AccessRecord, AccessSample
@@ -13,10 +12,7 @@ class DataMetricsRequest(AccessResponse, PropagationResponse):
     The satellite states info is available with the ``PropagationResponse`` and the access info is available with the ``ObservationResponse``.
     """
 
-    start: AwareDatetime = Field(..., description="Data metrics analysis start time.")
-    duration: timedelta = Field(
-        ..., ge=0, description="Data metrics analysis duration."
-    )
+    pass
 
 
 class BasicSensorDataMetricsInstantaneous(BaseModel):
