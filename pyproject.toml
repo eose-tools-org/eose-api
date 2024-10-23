@@ -41,6 +41,7 @@ dev = [
 docs = [
     "autodoc_pydantic >= 2",
     "docutils",
+    "enum-tools[sphinx]",
     "myst-nb",
     "sphinx >= 7",
     "sphinx-autodoc-typehints",

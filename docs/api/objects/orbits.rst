@@ -1,6 +1,6 @@
 Orbits
 ^^^^^^
 
-.. autofunction:: eose.orbits.Propagator
+.. autoenum:: eose.orbits.Propagator
   
 .. autopydantic_model:: eose.orbits.GeneralPerturbationsOrbitState

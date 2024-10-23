@@ -7,7 +7,7 @@ Instruments
 
 .. autopydantic_model:: eose.instruments.BasicSensor
 
-.. autofunction:: eose.instruments.OpticalInstrumentScanTechnique
+.. autoenum:: eose.instruments.OpticalInstrumentScanTechnique
 
 .. autopydantic_model:: eose.instruments.PassiveOpticalScanner
 

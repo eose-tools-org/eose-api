@@ -4,8 +4,8 @@ Utilities
 Enumerations
 ^^^^^^^^^^^^
 
-.. autofunction:: eose.utils.PlanetaryCoordinateReferenceSystem
+.. autoenum:: eose.utils.PlanetaryCoordinateReferenceSystem
     
-.. autofunction:: eose.utils.CartesianReferenceFrame
+.. autoenum:: eose.utils.CartesianReferenceFrame
     
-.. autofunction:: eose.utils.FixedOrientation
+.. autoenum:: eose.utils.FixedOrientation

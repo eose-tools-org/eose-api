@@ -21,6 +21,7 @@ from eose.datametrics import DataMetricsRequest
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
+    "enum_tools.autoenum",
     "myst_nb",
     "sphinx.ext.autodoc",
     "sphinx.ext.doctest",
