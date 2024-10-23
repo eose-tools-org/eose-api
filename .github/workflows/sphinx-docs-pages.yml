@@ -14,12 +14,5 @@ jobs:
       pages: write
       id-token: write
     steps:
-    - id: configuration
-      uses: sphinx-notes/pages@v3
-      with:
-        publish: false
     - id: deployment
       uses: sphinx-notes/pages@v3
-      with:
-        checkout: false
-        publish: true
