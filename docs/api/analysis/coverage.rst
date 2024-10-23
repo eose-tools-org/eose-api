@@ -2,13 +2,13 @@ Coverage Analysis
 ^^^^^^^^^^^^^^^^^
 
 .. autopydantic_model:: eose.coverage.CoverageRequest
-    :inherited-members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.coverage.CoverageSample
-    :inherited-members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.coverage.CoverageRecord
-    :inherited-members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.coverage.CoverageResponse
-    :inherited-members:
+    :inherited-members: BaseModel

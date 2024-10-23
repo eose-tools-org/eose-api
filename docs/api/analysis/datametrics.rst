@@ -2,7 +2,7 @@ Data Metrics Analysis
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. autopydantic_model:: eose.datametrics.DataMetricsRequest
-    :inherited-members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.datametrics.BasicSensorDataMetricsInstantaneous
 
@@ -11,10 +11,10 @@ Data Metrics Analysis
 .. autopydantic_model:: eose.datametrics.SinglePolStripMapSARInstantaneous
 
 .. autopydantic_model:: eose.datametrics.DataMetricsSample
-    :inherited-members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.datametrics.DataMetricsRecord
-    :inherited-members:
+    :inherited-members: BaseModel
 
 .. autopydantic_model:: eose.datametrics.DataMetricsResponse
-    :inherited-members:
+    :inherited-members: BaseModel
