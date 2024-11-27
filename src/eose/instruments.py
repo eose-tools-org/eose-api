@@ -194,13 +194,21 @@ class Antenna(BaseModel):
         description="Antenna shape.")
     aperture_excitation_profile: ApertureExcitationProfile = Field(
         ApertureExcitationProfile.UNIFORM, 
-        description="Antenna aperture excitation profile."
-    )
+        description="Antenna aperture excitation profile.")
+    aperture_efficiency: Optional[float] = Field(
+            1, ge=0, le=1, description="Aperture efficiency of antenna."
+        )
+    radiation_efficiency: Optional[float] = Field(
+            1, ge=0, le=1, description="Radiation efficiency of antenna."
+        )
+    physical_temp: Optional[float] = Field(
+            1, gt=0, description="Antenna physical temperature in Kelvin."
+        )
 
 class SinglePolStripMapSAR(BaseModel):
     """ Single polarization, strip map synthetic aperture radar.
 
-        Field of view is calculated from the antenna specifications.
+        Field of view input by the user has to be consitent with the provided antenna dimensions.
 
         Reference for the inline described parameters: 
             1. Performance Limits for Synthetic Aperture Radar - second edition SANDIA Report 2006. ----> Main reference.
@@ -222,8 +230,12 @@ class SinglePolStripMapSAR(BaseModel):
         default_factory=lambda: list([0, 0, 0, 1]),
         description="Orientation of the sensor body-fixed frame, relative to the spacecraft body-fixed frame. It is assumed that the sensor field of view (FOV) is aligned to the sensor body-fixed frame, and the sensor's FOV axis is aligned with its z-axis.",
     )
+    field_of_view: Union[CircularGeometry, RectangularGeometry] = Field(
+        ...,
+        description="Field of view of the sensor."
+    )
     scene_field_of_view: Optional[RectangularGeometry] = Field(
-        None, description="Scene field of view of the sensor."
+        None, description="Scene field of view of the sensor. If not specified, the scene FOV is set to be the FOV. The cross-track FOV (swath width) of the scene FOV should match with the FOV."
     )
     data_rate: Optional[float] = Field(
         None, gt=0, description="Data rate of the sensor in megabits per second."
@@ -231,7 +243,7 @@ class SinglePolStripMapSAR(BaseModel):
     bits_per_pixel: Optional[int] = Field(
         None, ge=1, description="Bits per pixel for the sensor's data output."
     )
-    pulse_Width: float = Field(
+    pulse_width: float = Field(
         None, gt=0, description="(Actual pulse width in (seconds) (per channel/polarization)."
     )
     antenna: Antenna = Field(
@@ -245,10 +257,6 @@ class SinglePolStripMapSAR(BaseModel):
     )
     chirp_bandwidth: float = Field(
         ..., gt=0, description="""Chirp bandwidth of radar operation in (Hertz) (per channel/polarization)."""
-    )
-    minimum_prf: float = Field(
-        ..., gt=0, description="""The minimum allowable pulse-repetition-frequency of operation in (Hertz).  
-                                  If dual-pol with alternating pol pulses, the PRF specification is considered taking all pulses into account (i.e. is considered as the PRFmaster)."""
     )
     minimum_prf: int = Field(
         ..., gt=0, description="The minimum allowable pulse-repetition-frequency of operation in (Hertz).  If dual-pol with alternating pol pulses, the PRF specification is considered taking all pulses into account (i.e. is considered as the PRFmaster)."
@@ -270,7 +278,7 @@ class SinglePolStripMapSAR(BaseModel):
                            antenna port, and perhaps an additional 0.5 dB to 1.5 dB two-way through the radome. See [Pg.15, 1]."""
     )
     atmos_loss: float = Field(
-        ..., gt=0, description="2-way atmospheric loss of electromagnetic energy (see [Pg.16, 1])."
+        2, gt=0, description="2-way atmospheric loss of electromagnetic energy (see [Pg.16, 1]). 2 dB is the default value."
     )
 
 

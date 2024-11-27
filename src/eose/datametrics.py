@@ -70,6 +70,31 @@ class SinglePolStripMapSARInstantaneous(BaseModel):
     """TBD"""
 
     type: Literal["SinglePolStripMapSAR"] = Field("SinglePolStripMapSAR")
+    time: AwareDatetime = Field(
+        ..., description="Time instant at which the data metrics are recorded."
+    )
+    noise_equivalent_sigma_zero: float = Field(
+        ...,
+        description="The backscatter coefficient of a target for which the signal power level in final image is equal to the noise power level (units: decibels). **Numerically lesser is better instrument performance.**",
+    )
+    along_track_resolution: float = Field(
+        ..., description="Spatial resolution in meters of a hypothetical ground-pixel centered about observation point in the along-track direction."
+    )
+    cross_track_resolution: float = Field(
+        ..., description="Spatial resolution in meters of a hypothetical ground-pixel centered about observation point in the cross-track direction."
+    )
+    incidence_angle: float = Field(
+        ...,
+        description="Incidence angle in degrees at the target point calculated assuming spherical Earth.",
+    )
+    swath_width: float = Field(
+        ..., description="Swath-width (meters) of the strip of which the imaged pixel is part off."
+    )
+    pulse_repetition_frequency: int = Field(
+        ...,
+        description="Highest Pulse Repetition Frequency in Hertz (within the specified PRF range) at which the observation is possible.",
+    )
+    
 
 
 class DataMetricsSample(AccessSample):
