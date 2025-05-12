@@ -48,6 +48,7 @@ docs = [
     "sphinx-rtd-theme",
 ]
 examples = [
+    "cartopy",
     "ipykernel",
     "joblib",
     "matplotlib",
